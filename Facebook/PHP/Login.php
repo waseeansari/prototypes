@@ -12,7 +12,7 @@ function createFbOject()
     return new Facebook\Facebook( $creds ); // create facebook object
 }
 
-//Create login url to get facebook pages parmission
+//Create login url to get facebook parmission
 function fbLoginUrl($permissions)
 {
     $facebook = createFbOject();
@@ -54,7 +54,7 @@ function fb_login_url()
 ?>
 
 <!--On click show facebook login page url and ask for permisson  -->
-<a href="<?php echo $fb_login_url; ?>">Login To Facebook Page</a>
+<a href="<?php echo fb_login_url(); ?>">Login To Facebook Page</a>
 
 <!-- After login and allowing permission, facebook will redirect to giving page in facebook dev with url-->
 
@@ -62,6 +62,13 @@ function fb_login_url()
     your-giving-domain/?code=CODE&state=STATE
  -->
 <?php
+
+// call getFbAuthKey() function after server get code form social platform 
+// example:
+if(isset($_GET['code'])){
+	//Getting auth key against facebook code
+	$authkey = getFbAuthKey();
+}
 
 //geting fb short lived auth key and exchaning it with longed lived key
 function getFbAuthKey()
@@ -93,3 +100,5 @@ function getFbAuthKey()
 
 	return $accessToken; //save token to session for getting facbook pages
 }
+
+?>
